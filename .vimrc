@@ -2,7 +2,7 @@ set nocompatible
 filetype off
 
 " ================ VERSION ================== "
-if (empty(glob('~/.version.vim'))
+if empty(glob('~/.version.vim'))
     silent !curl -fLo ~/.version.vim
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.version.vim
     silent !curl -fLo ~/.vimrc
