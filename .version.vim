@@ -1,1 +1,1 @@
-let g:version = [1, 0, 0]
+let g:vimrc_version = [1, 0, 0]
