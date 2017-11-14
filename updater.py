@@ -10,10 +10,10 @@ GITHUB_VERSION = "https://raw.githubusercontent.com/Joklost/.vimrc/master/versio
 GITHUB_VIMRC = "https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc"
 HOME = os.path.expanduser("~")
 CONF = "".join([HOME, "/.vimrc.json"])
-VIMRC = "".join([HOME, "/.vimrc2"])
+VIMRC = "".join([HOME, "/.vimrc"])
 
 
-def get_from_github(url: str) -> list:
+def request(url: str) -> list:
     """Download file from GitHub"""
     with urllib.request.urlopen(url) as doc:
         return doc.read().decode()
@@ -31,16 +31,17 @@ def config_exists() -> bool:
 
 def github_version() -> list:
     """Return the version currently on the master branch"""
-    return json.loads(get_from_github(GITHUB_VERSION))["version"]
+    return json.loads(request(GITHUB_VERSION))["version"]
 
 
 def update_files():
     """Update the files from GitHub"""
     print("Updating .vimrc")
-    version = get_from_github(GITHUB_VERSION)
-    vimrc = get_from_github(GITHUB_VIMRC)
+    version = request(GITHUB_VERSION)
+    vimrc = request(GITHUB_VIMRC)
     write_config(json.loads(version))
     write_vimrc(vimrc)
+    print("Update complete. Restart vim to finalise.")
 
 
 def local_version() -> list:
@@ -77,11 +78,23 @@ def write_vimrc(content: str):
         vimrc.write(content)
 
 
-def main():
-    """Update if GitHub version is newer"""
+def update():
+    """Update files, called from vim"""
     if github_version() > local_version():
         update_files()
 
 
-if __name__ == "__main__":
-    main()
+def check_updates():
+    """Check for updates, called from vim"""
+    if github_version() > local_version():
+        print("An update is available. Write :Update to update.")
+
+
+# def main():
+#     """Update if GitHub version is newer"""
+#     if github_version() > local_version():
+#         update_files()
+
+
+# if __name__ == "__main__":
+#     main()

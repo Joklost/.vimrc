@@ -1,16 +1,32 @@
 set nocompatible
 filetype off
 
-" ================ VERSION ================== "
-if empty(glob('~/.version.vim'))
-    silent !curl -fLo ~/.version.vim
-                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.version.vim
-    silent !curl -fLo ~/.vimrc
-                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc
+" ================ UPDATER ================== "
+if !has('python3')
+    call confirm('You must have vim compiled with python3', 'OK')
     finish
-else
-    source ~/.version.vim
 endif
+
+if empty(glob('~/.vimrc.updater.py'))
+    silent !curl -fLo ~/.vimrc.updater.py
+                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/updater.py
+endif
+
+py3file ~/.vimrc.updater.py
+
+function UpdateVimrc()
+    python3 update()
+    echo '.vimrc updated. Restart to complete.'
+endfunction
+
+function CheckUpdates()
+    python3 check_updates()
+endfunction
+
+command CheckUpdates call CheckUpdates()
+command Update call UpdateVimrc()
+
+call CheckUpdates()
 
 " ================ PLUGINS ================== "
 if empty(glob('~/.vim/autoload/plug.vim'))
