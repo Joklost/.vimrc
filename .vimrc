@@ -15,10 +15,18 @@ endif
 py3file ~/.vimrc.updater.py
 
 function UpdateVimrc()
-    python3 update()
+    silent !curl -fLo ~/.vimrc.json
+                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json
+    silent !curl -fLo ~/.vimrc
+                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc
+    silent !echo 'The latest .vimrc version has been downloaded.'
+    :q!
 endfunction
 
 function CheckUpdates()
+    " The python function asks the user to type :Update,
+    " as I have no easy way to get the output of a python
+    " function.
     python3 check_updates()
 endfunction
 
@@ -26,6 +34,8 @@ command CheckUpdates call CheckUpdates()
 command Update call UpdateVimrc()
 
 call CheckUpdates()
+
+" =========================================== "
 
 " ================ PLUGINS ================== "
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -50,6 +60,8 @@ call plug#end()
 if exists('g:first_time')
     finish
 endif
+
+" =========================================== "
 
 " ================ SETTINGS ================= "
 filetype indent plugin on
