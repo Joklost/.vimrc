@@ -109,6 +109,7 @@ def update():
     if github_version() > local_version():
         print("Please exit vim within 10 seconds to update...")
         proc = mp.Process(target=__update)
+        proc.daemon = False
         proc.start()
 
 

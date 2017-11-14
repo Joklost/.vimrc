@@ -30,8 +30,6 @@ call CheckUpdates()
 " ================ PLUGINS ================== "
 if empty(glob('~/.vim/autoload/plug.vim'))
     let g:first_time = 1
-    silent !curl -fLo ~/.version.vim
-                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.version.vim
     silent !mkdir -p ~/.vim/autoload
     silent !curl -fLo ~/.vim/autoload/plug.vim
                 \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
