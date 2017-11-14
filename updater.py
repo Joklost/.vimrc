@@ -5,6 +5,10 @@ Keeps lightweight .vimrc up-to-date.
 import json
 import os
 import urllib.request
+import time
+import subprocess
+import multiprocessing as mp
+
 
 GITHUB_VERSION = "https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json"
 GITHUB_VIMRC = "https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc"
@@ -36,12 +40,12 @@ def github_version() -> list:
 
 def update_files():
     """Update the files from GitHub"""
-    print("Updating .vimrc")
     version = request(GITHUB_VERSION)
     vimrc = request(GITHUB_VIMRC)
     write_config(json.loads(version))
     write_vimrc(vimrc)
-    print("Update complete. Restart vim to finalise.")
+
+    print("Finished updating files")
 
 
 def local_version() -> list:
@@ -78,10 +82,36 @@ def write_vimrc(content: str):
         vimrc.write(content)
 
 
+def vim_running():
+    """Check if the vim process is running."""
+    try:
+        return subprocess.check_output(["pgrep", "vim"]) is not None
+    except subprocess.CalledProcessError:
+        pass
+
+    return False
+
+
+def __update():
+    """Target function for Update process."""
+    print("Updating...")
+
+    counter = 0
+    while counter < 10:
+        time.sleep(1)
+        counter += 1
+
+        if not vim_running:
+            update_files()
+            return
+
+
 def update():
     """Update files, called from vim"""
     if github_version() > local_version():
-        update_files()
+        print("Please exit vim within 10 seconds to update...")
+        proc = mp.Process(target=__update)
+        proc.start()
 
 
 def check_updates():
