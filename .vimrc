@@ -16,7 +16,6 @@ py3file ~/.vimrc.updater.py
 
 function UpdateVimrc()
     python3 update()
-    echo '.vimrc updated. Restart to complete.'
 endfunction
 
 function CheckUpdates()

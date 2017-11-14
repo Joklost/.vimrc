@@ -94,8 +94,6 @@ def vim_running():
 
 def __update():
     """Target function for Update process."""
-    print("Updating...")
-
     counter = 0
     while counter < 10:
         time.sleep(1)
