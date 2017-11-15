@@ -33,8 +33,6 @@ endfunction
 command CheckUpdates call CheckUpdates()
 command Update call UpdateVimrc()
 
-call CheckUpdates()
-
 " =========================================== "
 
 " ================ PLUGINS ================== "
@@ -58,8 +56,11 @@ Plug 'easymotion/vim-easymotion'
 call plug#end()
 
 if exists('g:first_time')
+    call UpdateVimrc()
     finish
 endif
+
+call CheckUpdates()
 
 " =========================================== "
 
