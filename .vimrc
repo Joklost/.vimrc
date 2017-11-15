@@ -52,6 +52,7 @@ Plug 'ntpeters/vim-better-whitespace'
 Plug 'nvie/vim-flake8'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'easymotion/vim-easymotion'
+Plug 'scrooloose/nerdtree'
 
 call plug#end()
 
@@ -173,6 +174,7 @@ map w               <Plug>(easymotion-w)
 map W               <Plug>(easymotion-W)
 map <leader>f       <Plug>(easymotion-overwin-f2)
 
+nmap <C-n>          :NERDTreeToggle<cr>
 " Disable Arrow keys in Escape mode
 map <up>            <nop>
 map <down>          <nop>
