@@ -5,17 +5,21 @@ Keeps lightweight .vimrc up-to-date.
 import json
 import os
 import urllib.request
-
+import urllib.error
+import socket
 
 GITHUB_VERSION = "https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json"
 HOME = os.path.expanduser("~")
 CONF = "".join([HOME, "/.vimrc.json"])
 
 
-def request(url: str) -> list:
+def request(url: str):
     """Download file from GitHub"""
-    with urllib.request.urlopen(url) as doc:
-        return doc.read().decode()
+    try:
+        with urllib.request.urlopen(url) as doc:
+            return doc.read().decode()
+    except (socket.gaierror, urllib.error.URLError) as e:
+        return None
 
 
 def config_exists() -> bool:
@@ -25,7 +29,10 @@ def config_exists() -> bool:
 
 def github_version() -> list:
     """Return the version currently on the master branch"""
-    return json.loads(request(GITHUB_VERSION))["version"]
+    res = request(GITHUB_VERSION)
+    if res is None:
+        return [0, 0, 0]
+    return json.loads(res)["version"]
 
 
 def local_version() -> list:
@@ -39,5 +46,10 @@ def local_version() -> list:
 
 def check_updates():
     """Check for updates, called from vim"""
-    if github_version() > local_version():
+    github = github_version()
+    if github == [0, 0, 0]:
+        print("Unable to connect to GitHub.")
+        return
+    if github > local_version():
         print("An update is available. Write :Update to update.")
+
