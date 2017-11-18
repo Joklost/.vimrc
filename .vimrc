@@ -14,12 +14,17 @@ endif
 
 py3file ~/.vimrc.updater.py
 
+
 function UpdateVimrc()
     silent !curl -fLo ~/.vimrc.json
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json
     silent !curl -fLo ~/.vimrc
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc
     silent !echo 'The latest .vimrc version has been downloaded.'
+endfunction
+
+function UpdateVimrcCmd()
+    call UpdateVimrc()
     :q!
 endfunction
 
@@ -31,7 +36,7 @@ function CheckUpdates()
 endfunction
 
 command CheckUpdates call CheckUpdates()
-command Update call UpdateVimrc()
+command Update call UpdateVimrcCmd()
 
 " =========================================== "
 
