@@ -77,10 +77,7 @@ def add_plugins():
         return
 
     for plug in config["plugins"]:
-        if re.match(r"Plug '[\w\-.]*\/[\w\-.]*'", plug) is None:
-            print("ERROR: Unable to add plugin '{}'".format(plug))
-            continue
-        vim.command(plug)
+        vim.command("Plug '{}'".format(plug)
 
 
 def source_vimfiles():
