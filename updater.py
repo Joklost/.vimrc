@@ -77,7 +77,7 @@ def add_plugins():
         return
 
     for plug in config["plugins"]:
-        vim.command("Plug '{}'".format(plug)
+        vim.command("Plug '{}'".format(plug))
 
 
 def source_vimfiles():
