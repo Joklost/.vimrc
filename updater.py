@@ -7,10 +7,14 @@ import os
 import urllib.request
 import urllib.error
 import socket
+import vim
+import re
+
 
 GITHUB_VERSION = "https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json"
 HOME = os.path.expanduser("~")
-CONF = "".join([HOME, "/.vimrc.json"])
+VERSION_FILE = "".join([HOME, "/.vimrc.json"])
+CONFIG_FILE = "".join([HOME, "/.vim/config.json"])
 
 
 def request(url: str):
@@ -22,9 +26,14 @@ def request(url: str):
         return None
 
 
-def config_exists() -> bool:
+def versionfile_exists() -> bool:
     """Check if .vimrc.json exists"""
-    return os.path.isfile(CONF)
+    return os.path.isfile(VERSION_FILE)
+
+
+def config_exists() -> bool:
+    """Check if .vim/config.json exists"""
+    return os.path.isfile(CONFIG_FILE)
 
 
 def github_version() -> list:
@@ -37,10 +46,10 @@ def github_version() -> list:
 
 def local_version() -> list:
     """Return the local version"""
-    if not config_exists():
+    if not versionfile_exists():
         return [0, 0, 0]  # force update
 
-    with open(CONF, "r") as conf:
+    with open(VERSION_FILE, "r") as conf:
         return json.load(conf)["version"]
 
 
@@ -52,4 +61,42 @@ def check_updates():
         return
     if github > local_version():
         print("An update is available. Write :Update to update.")
+
+
+def check_config():
+    if not config_exists():
+        return None
+
+    with open(CONFIG_FILE, "r") as conf:
+        return json.load(conf)
+
+
+def add_plugins():
+    config = check_config()
+    if config is None or "plugins" not in config:
+        return
+
+    for plug in config["plugins"]:
+        if re.match(r"Plug '[\w\-.]*\/[\w\-.]*'", plug) is None:
+            print("ERROR: Unable to add plugin '{}'".format(plug))
+            continue
+        vim.command(plug)
+
+
+def source_vimfiles():
+    config = check_config()
+    if config is None or "vimfiles" not in config:
+        return
+
+    for fi in config["vimfiles"]:
+        vim.command("source {}".format(fi))
+
+
+def load_cmds():
+    config = check_config()
+    if config is None or "cmds" not in config:
+        return
+
+    for cmd in config["cmds"]:
+        vim.command(cmd)
 

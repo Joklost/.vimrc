@@ -7,19 +7,23 @@ if !has('python3')
     finish
 endif
 
-if empty(glob('~/.vimrc.updater.py'))
+function UpdateUpdater()
     silent !curl -fLo ~/.vimrc.updater.py
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/updater.py
+endfunction
+
+if empty(glob('~/.vimrc.updater.py'))
+    call UpdateUpdater()
 endif
 
 py3file ~/.vimrc.updater.py
-
 
 function UpdateVimrc()
     silent !curl -fLo ~/.vimrc.json
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/version.json
     silent !curl -fLo ~/.vimrc
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc
+    call UpdateUpdater()
     silent !echo 'The latest .vimrc version has been downloaded.'
 endfunction
 
@@ -58,6 +62,7 @@ Plug 'nvie/vim-flake8'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'easymotion/vim-easymotion'
 Plug 'scrooloose/nerdtree'
+python3 add_plugins()
 
 call plug#end()
 
@@ -200,3 +205,5 @@ vmap <down>         <nop>
 vmap <left>         <nop>
 vmap <right>        <nop>
 
+python3 load_cmds()
+python3 source_vimfiles()
