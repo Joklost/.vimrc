@@ -134,21 +134,12 @@ imap kj             <Esc>
 noremap <F1>        <Esc>
 vnoremap <F1>       <Esc>
 inoremap <F1>       <Esc>
-" Allows smooth movement through a line spanning multiple visual lines.
-" This is good for editing LaTeX, as some of the lines can be quite long.
-" Up & Down
-nnoremap <S-j>      gj
-nnoremap <S-k>      gk
-vnoremap <S-j>      gj
-vnoremap <S-k>      gk
+
 " Right & Left
 nnoremap <S-l>      $
 nnoremap <S-h>      ^
 vnoremap <S-l>      $
 vnoremap <S-h>      ^
-" Because of the above lines, it is no longer possible to join two lines. This
-" bind fixes that.
-nnoremap <leader>j  J
 
 " Easy motion between splits. Also allows for some clever tmux usage where the
 " same binds can be used to move effortlessly between tmux splits and Vim splits.
