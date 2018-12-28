@@ -25,6 +25,8 @@ function UpdateVimrc()
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.vimrc
     silent !curl -fLo ~/.tmux.conf
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.tmux.conf
+    silent !curl -fLo ~/.tigrc
+                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.tigrc
     call UpdateUpdater()
     silent !echo 'The latest .vimrc version has been downloaded.'
 endfunction

@@ -1,0 +1,4 @@
+bind status P !git pull -r
+bind status U !git push
+bind status C !git commit -s
+bind status + !git commit --amend
