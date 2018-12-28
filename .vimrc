@@ -29,6 +29,8 @@ function UpdateVimrc()
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.tigrc
     call UpdateUpdater()
     silent !echo 'The latest .vimrc version has been downloaded.'
+
+    autocmd VimEnter * PlugInstall --sync | qall
 endfunction
 
 function UpdateVimrcCmd()
