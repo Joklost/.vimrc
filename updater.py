@@ -61,6 +61,8 @@ def check_updates():
         return
     if github > local_version():
         print("An update is available. Write :Update to update.")
+    else:
+        print("Already on latest version.")
 
 
 def check_config():
