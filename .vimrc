@@ -49,7 +49,7 @@ endfunction
 
 command CheckUpdates call CheckUpdates()
 command Update call UpdateVimrcCmd()
-
+command UpdateUpdater call UpdateUpdater()
 " =========================================== "
 
 " ================ PLUGINS ================== "
