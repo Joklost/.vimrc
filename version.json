@@ -1,4 +1,4 @@
 {
-  "version": [1, 1, 6],
-  "changelog": "Run PlugInstall when updating."
+  "version": [1, 1, 7],
+  "changelog": "No longer check for updates on start-up, and add .inputrc"
 }

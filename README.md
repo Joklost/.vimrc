@@ -2,6 +2,8 @@
 Lightweight Vim runtime configuration.
 
 ## Setup
+This configuration depends on `curl`, `exuberant-ctags`, and `git`.
+
 Almost everything is setup and downloaded automatically. Just run the following commands, and you will be good to go.
 
 * `cd ~`

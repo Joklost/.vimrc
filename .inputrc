@@ -1,0 +1,4 @@
+$include /etc/inputrc
+set completion-ignore-case On
+"\t": menu-complete
+"\e[Z": menu-complete-backward

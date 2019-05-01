@@ -27,6 +27,8 @@ function UpdateVimrc()
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.tmux.conf
     silent !curl -fLo ~/.tigrc
                 \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.tigrc
+    silent !curl -fLo ~/.inputrc
+                \ https://raw.githubusercontent.com/Joklost/.vimrc/master/.inputrc
     call UpdateUpdater()
     silent !echo 'The latest .vimrc version has been downloaded.'
 
@@ -76,8 +78,6 @@ if exists('g:first_time')
     call UpdateVimrc()
     finish
 endif
-
-call CheckUpdates()
 
 " =========================================== "
 
