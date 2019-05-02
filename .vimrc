@@ -40,6 +40,11 @@ function UpdateVimrcCmd()
     :q!
 endfunction
 
+function UpdateUpdaterCmd()
+    call UpdateUpdater()
+    :q!
+endfunction
+
 function CheckUpdates()
     " The python function asks the user to type :Update,
     " as I have no easy way to get the output of a python
@@ -49,7 +54,7 @@ endfunction
 
 command CheckUpdates call CheckUpdates()
 command Update call UpdateVimrcCmd()
-command UpdateUpdater call UpdateUpdater()
+command UpdateUpdater call UpdateUpdaterCmd()
 " =========================================== "
 
 " ================ PLUGINS ================== "
